@@ -31,12 +31,16 @@ async function loadPokemonBatch() {
 
 async function searchPokemon() {
     const value = document.getElementById("search").value.toLowerCase();
-    if(value.length < 3) return alert("Please enter at least 3 letters");
+    const container = document.getElementById("pokemon-container");
+    container.innerHTML = "";
+    if(value.length < 3) return container.innerHTML = `<p style="text-align:center; width:100%;">Please enter at least 3 letters</p>`;
     try {
-        document.getElementById("pokemon-container").innerHTML = "";
-        renderPokemon(await fetchPokemon(value));
+        const data = await (await fetch(`${BASE_URL}pokemon?limit=100000`)).json();
+        const results = data.results.filter(p => p.name.includes(value));
+        if(results.length === 0) return container.innerHTML = `<p style="text-align:center; width:100%;">No Pokémon found for "${value}"</p>`;
+        for(let i=0; i<Math.min(10, results.length); i++) renderPokemon(await fetchPokemon(results[i].name));
     } catch {
-        document.getElementById("pokemon-container").innerHTML = `<p style="text-align:center; width:100%;">No Pokémon found for "${value}"</p>`;
+        container.innerHTML = `<p style="text-align:center; width:100%;">Error loading Pokémon</p>`;
     }
 }
 

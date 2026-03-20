@@ -20,3 +20,7 @@ header {
     -webkit-text-stroke: 2px black;
     text-shadow:2px 2px 0 black, 0 0 10px orange, 0 0 20px red;
 }
+
+.header-title a{
+    text-decoration: none;
+}
