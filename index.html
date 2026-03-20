@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pokedex</title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+        <header>
+            <img class="pokeball-header" src="img/pokeball.png" alt>
+            <p class="header-title">Pokedex</p>
+            <div>
+                <input type="search" placeholder="Search for a pokemon..."
+                    minlength="3" required>
+                <button onclick="searchPokemon()">Search</button>
+                <button onclick="deleteSearch()">Delete</button>
+            </div>
+        </header>
+
+        <script src="script.js"></script>
+    </body>
+</html>
