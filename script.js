@@ -44,9 +44,29 @@ async function searchPokemon() {
     }
 }
 
+function deleteSearch() {
+    document.getElementById("search").value = "";
+    const container = document.getElementById("pokemon-container");
+    container.innerHTML = "";
+    offset = 0;
+    loadPokemonBatch();
+}
+
 document.getElementById("load-more-btn")
     .addEventListener("click", loadPokemonBatch);
 
 window.addEventListener("DOMContentLoaded", () => {
     loadPokemonBatch();
 });
+
+async function openOverlay(id) {
+    const pokemon = await fetchPokemon(id);
+    document.getElementById("overlay-content").innerHTML = overlayTemplate(pokemon);
+    document.getElementById("overlay").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+}
+
+function closeOverlay() {
+    document.getElementById("overlay").classList.add("hidden");
+    document.body.style.overflow = "";
+}

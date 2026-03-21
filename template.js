@@ -11,3 +11,12 @@ function pokemonTemplate(pokemon) {
         </div>
     `;
 }
+
+function overlayTemplate(pokemon) {
+    return `
+        <div class="pokemon-card">
+            <img src="${pokemon.sprites.front_default}">
+            <h2>${pokemon.name.toUpperCase()}</h2>
+        </div>
+    `;
+}
