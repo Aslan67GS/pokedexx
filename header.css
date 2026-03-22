@@ -24,3 +24,17 @@ header {
 .header-title a{
     text-decoration: none;
 }
+
+
+@media(max-width: 700px) {
+    .pokeball-header {
+        display: none;
+    }
+
+    header {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: 100px;
+    }
+}
