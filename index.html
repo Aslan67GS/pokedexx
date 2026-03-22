@@ -23,7 +23,9 @@
         </header>
         <main id="pokemon-container"></main>
         <button id="load-more-btn">Load More Pokémon</button>
-
+        <div id="overlay" class="hidden" onclick="closeOverlay()">
+            <div id="overlay-content" onclick="event.stopPropagation()"></div>
+        </div>
         <script src="template.js"></script>
         <script src="script.js"></script>
     </body>

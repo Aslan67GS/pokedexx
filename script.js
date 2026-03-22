@@ -60,8 +60,9 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 async function openOverlay(id) {
-    const pokemon = await fetchPokemon(id);
-    document.getElementById("overlay-content").innerHTML = overlayTemplate(pokemon);
+    const p = await fetchPokemon(id);
+    const evoHTML = await fetchEvolutionChain(id);
+    document.getElementById("overlay-content").innerHTML = overlayTemplate(p, evoHTML);
     document.getElementById("overlay").classList.remove("hidden");
     document.body.style.overflow = "hidden";
 }
@@ -69,4 +70,27 @@ async function openOverlay(id) {
 function closeOverlay() {
     document.getElementById("overlay").classList.add("hidden");
     document.body.style.overflow = "";
+}
+
+function showTab(tab) {
+    const stats = document.getElementById('stats-tab');
+    const evo = document.getElementById('evo-tab');
+    stats.classList.toggle('hidden', tab !== 'stats');
+    evo.classList.toggle('hidden', tab !== 'evo');
+}
+
+async function fetchEvolutionChain(id){
+    try {
+        const species = await (await fetch(`${BASE_URL}pokemon-species/${id}`)).json();
+        const evoData = await (await fetch(species.evolution_chain.url)).json();
+        let evoNames = [];
+        let evo = evoData.chain;
+        do {
+            evoNames.push(evo.species.name);
+            evo = evo.evolves_to[0];
+        } while(evo);
+        return evoNames.map(n=>`<p>${n.toUpperCase()}</p>`).join('');
+    } catch {
+        return '<p>No evolution data</p>';
+    }
 }
