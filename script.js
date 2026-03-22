@@ -39,7 +39,7 @@ async function searchPokemon(){
     try{
         const data=await (await fetch(`${BASE_URL}pokemon?limit=100000`)).json();
         const results=data.results.filter(p=>p.name.includes(value));
-        if(!results.length) return container.innerHTML=`<p>No Pokémon found</p>`;
+        if(!results.length) return container.innerHTML=`<p>No Pokemon found</p>`;
         for(let i=0;i<Math.min(10,results.length);i++) renderPokemon(await fetchPokemon(results[i].name));
     }catch{container.innerHTML=`<p>Error loading Pokémon</p>`;}
 }

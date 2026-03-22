@@ -31,6 +31,7 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
+    padding-bottom: 48px;
 }
 
 .pokemon-card {
@@ -63,7 +64,7 @@
 
 #load-more-btn {
     display: block;
-    margin: 20px auto;
+    margin: 20px auto 100px auto;;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
