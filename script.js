@@ -53,6 +53,14 @@ function deleteSearch(){
     loadPokemonBatch();
 }
 
+const loader = document.getElementById("loading-screen");
+
+window.addEventListener("DOMContentLoaded", async () => {
+    loader.style.display = "flex";
+    await loadPokemonBatch();
+    loader.style.display = "none";
+});
+
 document.getElementById("load-more-btn")
     .addEventListener("click", loadPokemonBatch);
 
