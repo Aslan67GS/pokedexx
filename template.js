@@ -7,19 +7,27 @@ function pokemonTemplate(p){return`
 
 function overlayTemplate(p, evoHTML) {
     return `
-        <div class="overlay-card">
-            <button class="close-btn" onclick="closeOverlay()">×</button>
-            <img src="${p.sprites.front_default}" alt="${p.name}">
-            <h2>${p.name.toUpperCase()}</h2>
-            ${typesHTML(p)}
-            <div class="overlay-tabs">
-                <button onclick="showTab('stats')">Stats</button>
-                <button onclick="showTab('evo')">Evolution</button>
-            </div>
-            <div id="stats-tab" class="tab-content">${statsHTML(p)}</div>
-            <div id="evo-tab" class="tab-content hidden">${evoHTML}</div>
+    <div class="overlay-card">
+        <button onclick="closeOverlay()">×</button>
+        <div class="nav">
+            <button onclick="changePokemon(-1)">←</button>
+            <button onclick="changePokemon(1)">→</button>
         </div>
-    `;
+        <img src="${p.sprites.front_default}">
+        <h2>${p.name.toUpperCase()}</h2>
+        ${typesHTML(p)}
+        ${tabsHTML(p, evoHTML)}
+    </div>`;
+}
+
+function tabsHTML(p, evoHTML){
+    return `
+    <div class="overlay-tabs">
+        <button onclick="showTab('stats')">Stats</button>
+        <button onclick="showTab('evo')">Evolution</button>
+    </div>
+    <div id="stats-tab">${statsHTML(p)}</div>
+    <div id="evo-tab" class="hidden">${evoHTML}</div>`;
 }
 
 const typesHTML = p => `

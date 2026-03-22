@@ -1,6 +1,7 @@
 const BASE_URL = "https://pokeapi.co/api/v2/";
 let cachedPokemon = {};
 let offset = 0;
+let currentPokemonId = 1;
 const limit = 20;
 
 function renderPokemon(pokemon) {
@@ -29,26 +30,26 @@ async function loadPokemonBatch() {
     btn.textContent = "Load More Pokémon";
 }
 
-async function searchPokemon() {
-    const value = document.getElementById("search").value.toLowerCase();
-    const container = document.getElementById("pokemon-container");
-    container.innerHTML = "";
-    if(value.length < 3) return container.innerHTML = `<p style="text-align:center; width:100%;">Please enter at least 3 letters</p>`;
-    try {
-        const data = await (await fetch(`${BASE_URL}pokemon?limit=100000`)).json();
-        const results = data.results.filter(p => p.name.includes(value));
-        if(results.length === 0) return container.innerHTML = `<p style="text-align:center; width:100%;">No Pokémon found for "${value}"</p>`;
-        for(let i=0; i<Math.min(10, results.length); i++) renderPokemon(await fetchPokemon(results[i].name));
-    } catch {
-        container.innerHTML = `<p style="text-align:center; width:100%;">Error loading Pokémon</p>`;
-    }
+async function searchPokemon(){
+    const value=document.getElementById("search").value.toLowerCase();
+    const container=document.getElementById("pokemon-container");
+    const btn=document.getElementById("load-more-btn");
+    container.innerHTML=""; btn.style.display="none";
+    if(value.length<3) return container.innerHTML=`<p>Please enter at least 3 letters</p>`;
+    try{
+        const data=await (await fetch(`${BASE_URL}pokemon?limit=100000`)).json();
+        const results=data.results.filter(p=>p.name.includes(value));
+        if(!results.length) return container.innerHTML=`<p>No Pokémon found</p>`;
+        for(let i=0;i<Math.min(10,results.length);i++) renderPokemon(await fetchPokemon(results[i].name));
+    }catch{container.innerHTML=`<p>Error loading Pokémon</p>`;}
 }
 
-function deleteSearch() {
-    document.getElementById("search").value = "";
-    const container = document.getElementById("pokemon-container");
-    container.innerHTML = "";
-    offset = 0;
+function deleteSearch(){
+    document.getElementById("search").value="";
+    const container=document.getElementById("pokemon-container");
+    const btn=document.getElementById("load-more-btn");
+    container.innerHTML=""; offset=0;
+    btn.style.display="block";
     loadPokemonBatch();
 }
 
@@ -93,4 +94,13 @@ async function fetchEvolutionChain(id){
     } catch {
         return '<p>No evolution data</p>';
     }
+}
+
+async function changePokemon(step){
+    let newId = currentPokemonId + step;
+    if(newId < 1) return;
+    currentPokemonId = newId;
+    const p = await fetchPokemon(newId);
+    const evo = await fetchEvolutionChain(newId);
+    document.getElementById("overlay-content").innerHTML = overlayTemplate(p, evo);
 }

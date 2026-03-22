@@ -2,8 +2,6 @@
     margin: 0;
 }
 
-
-
 #pokemon-container {
     display: flex;
     flex-wrap: wrap;
@@ -145,13 +143,25 @@
     background: red;
     color: white;
     border: none;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     border-radius: 50%;
     width: 32px;
     height: 32px;
     cursor: pointer;
     line-height: 28px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.nav button {
+    font-size: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 .close-btn:hover {
